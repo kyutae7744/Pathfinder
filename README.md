@@ -1,0 +1,2 @@
+# Pathfinder
+Pathfinding Algorithm Visualizer
