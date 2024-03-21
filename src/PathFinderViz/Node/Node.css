@@ -1,0 +1,135 @@
+.node {
+    width: 20px;
+    height: 20px;
+    outline: .5px solid grey;
+    display: inline-block;
+    
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 2.5px;
+}
+
+.node-finish {
+    background-color:lightpink;
+}
+
+.node-start{
+    background-color:lightgreen;
+}
+
+
+
+.node-visited{
+    background-color: aquamarine;
+    animation-name: visitAnimation;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.node-path{
+    /*background-color:lemonchiffon;*/
+    
+    object-fit: fill;
+    animation-name: pathAnimation;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.node-wall{
+    background-color: cadetblue;
+    animation-name: wallAnimation;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.node-weight{
+    background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+    background-size: cover;
+    animation-name: weightAnimation;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes weightAnimation {
+    0% {
+        transform: scale(0);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+    }
+    50% {
+        transform: scale(1.1,1.1);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+    }
+    100% {
+        transform: scale(1);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+    }
+}
+
+@keyframes wallAnimation {
+    0% {
+        transform: scale(0);
+        background-color:cadetblue;
+    }
+    50% {
+        transform: scale(1.1,1.1);
+        background-color: cadetblue;
+    }
+    100% {
+        transform: scale(1);
+        background-color: cadetblue;
+    }
+}
+
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0);
+        background-color:lemonchiffon;
+    }
+    50% {
+        transform: scale(1.1,1.1);
+        background-color: lemonchiffon;
+    }
+    100% {
+        transform: scale(1);
+        background-color: lemonchiffon;
+    }
+}
+
+
+@keyframes visitAnimation {
+    0% {
+        transform: scale(0);
+        background-color: aquamarine;
+    }
+    50% {
+        transform: scale(1.1,1.1);
+        background-color: aquamarine;
+    }
+    100% {
+        transform: scale(1);
+        background-color: aquamarine;
+    }
+}
