@@ -1,6 +1,6 @@
 
 
-export function dijkstra(grid, startNode, finishNode){
+export function astar(grid, startNode, finishNode){
     const dir = [0, 1, 0, -1, 0];
     const visitedNodes = [];
 
@@ -30,6 +30,7 @@ export function dijkstra(grid, startNode, finishNode){
                 else{
                     grid[r][c].distance = currNode.distance + 1;
                 }
+                grid[r][c].distance += heuristics(grid[r][c], finishNode);
                 grid[r][c].parent = currNode;
                 toVisit.push(grid[r][c]);
                 
@@ -40,4 +41,8 @@ export function dijkstra(grid, startNode, finishNode){
     }
 
     return visitedNodes;
+}
+
+function heuristics(currNode, finishNode){
+    return Math.abs(finishNode.row - currNode.row) + Math.abs(finishNode.col - currNode.col);
 }

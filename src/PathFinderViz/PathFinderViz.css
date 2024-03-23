@@ -1,8 +1,10 @@
 .grid {
-    margin: 100px 0 0;
+    margin: 5px 0 0;
+    margin-bottom: 100px;
     justify-content: center;
     align-items: center;
-    display: inline;
+    display: grid;
+    font-size: 0;
     text-align: center;
     padding: 0;
 }

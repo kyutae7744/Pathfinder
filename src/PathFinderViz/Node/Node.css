@@ -1,12 +1,13 @@
 .node {
     width: 20px;
     height: 20px;
-    outline: .5px solid grey;
+    outline: .5px solid lightblue;
     display: inline-block;
     
+    /*
     margin-left: 2px;
-    margin-right: 2px;
-    border-radius: 2.5px;
+    margin-right: 2px;*/
+    border-radius: 4px;
 }
 
 .node-finish {
@@ -59,7 +60,7 @@
 
 .node-weight{
     background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
-    background-size: cover;
+    background-size:auto;
     animation-name: weightAnimation;
     animation-duration: 0.3s;
     animation-timing-function: ease-out;
@@ -68,6 +69,41 @@
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     animation-play-state: running;
+}
+
+.node-weight-path{
+    background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+    background-size: auto;
+    background-color: lemonchiffon;
+    animation-name: weightPathAnimation;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes weightPathAnimation {
+    0% {
+        transform: scale(0);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+        background-color: lemonchiffon;
+    }
+    50% {
+        transform: scale(1.1,1.1);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+        background-color: lemonchiffon;
+    }
+    100% {
+        transform: scale(1);
+        background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+        background-size: cover; 
+        background-color: lemonchiffon;
+    }
 }
 
 @keyframes weightAnimation {

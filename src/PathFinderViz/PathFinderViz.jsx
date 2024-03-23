@@ -5,12 +5,14 @@ import Node from './Node/Node';
 import './PathFinderViz.css';
 import {bfs} from '../algorithms/bfs';
 import {backtrack} from '../algorithms/backtrack';
+import {dijkstra} from '../algorithms/dijkstra';
+import {astar} from '../algorithms/astar';
 
 const START_NODE_ROW = 10;
-const START_NODE_COL = 5;
+const START_NODE_COL = 10;
 const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 20;
-
+const FINISH_NODE_COL = 50;
+var wallOrWeight = true;
 
 
 export default class PathFinderViz extends Component {
@@ -25,7 +27,8 @@ export default class PathFinderViz extends Component {
     
     /*Invoked immediately after a component is mounted. Any remote endpoint should also be placed here*/
     componentDidMount() {
-        this.createGrid();
+        const nodes = createGrid();
+        this.setState({nodes});
     }
 
     
@@ -81,19 +84,83 @@ export default class PathFinderViz extends Component {
     }
 
     animatePathBacktrack(shortestPath) {
-
-        for(let i=0; i < shortestPath.length; i++){
+        if(shortestPath === null || shortestPath.length === 0 || !shortestPath[shortestPath.length-1].isFinish){
+            return;
+        }
+        for(let i=0; i < shortestPath.length-1; i++){
             setTimeout(() => {
                 const node = shortestPath[i];
                 const newGrid = this.state.nodes.slice();
                 const newNode = {
                     ...node,
-                    isVisited: !node.visited,
                     isPath: true,
                 };
                 newGrid[node.row][node.col] = newNode;
                 this.setState({nodes: newGrid});
             },50*i);
+        }
+    }
+
+    animatePathDijkstra(node) {
+        var currNode = node;
+
+        var shortestPath = [];
+
+        if(!currNode.isFinish){
+            return;
+        }
+
+        while(currNode.parent != null){
+            if(currNode.isWall || currNode.isStart){
+                break;
+            }
+            shortestPath.unshift(currNode);
+            currNode = currNode.parent;
+        }
+
+        for(let i=0; i < shortestPath.length; i++){
+            console.log(shortestPath[i])
+            setTimeout(() => {
+                const node = shortestPath[i];
+                const newGrid = this.state.nodes.slice();
+                const newNode = {
+                    ...node,
+                    isVisited: false,
+                    isPath: true,
+                };
+                if(newNode.isWeight){
+                    newNode.isPath = false;
+                    newNode.isWeightPath = true;
+                    newNode.isWeight = false;
+                }
+                newGrid[node.row][node.col] = newNode;
+                this.setState({nodes: newGrid});
+            },5*i);
+        }
+    }
+
+    animateDijkstra(visitedNodes) {
+        for(let i=0; i <= visitedNodes.length-1; i++){
+            
+            if(i===visitedNodes.length-1){
+                setTimeout(() => {
+                    this.animatePathDijkstra(visitedNodes[visitedNodes.length-1]);
+                }, 6 * i);
+                return;
+            }
+            setTimeout(() => {
+                const node = visitedNodes[i];
+                const newGrid = this.state.nodes.slice();
+                const newNode = {
+                    ...node,
+                    isVisited: true,
+                };
+                if(newNode.isWeight){
+                    newNode.isVisited = false;
+                }
+                newGrid[node.row][node.col] = newNode;
+                this.setState({nodes: newGrid});
+            },5 * i);
         }
     }
 
@@ -120,12 +187,11 @@ export default class PathFinderViz extends Component {
     }
 
     animateBacktrack(visitedNodes, path) {
-        console.log(visitedNodes);
         for(let i=0; i <= visitedNodes.length; i++){
             if(i===visitedNodes.length){
                 setTimeout(() => {
                     this.animatePathBacktrack(path);
-                }, 6 * i);
+                }, 10 * i);
                 return;
             }
             setTimeout(() => {
@@ -133,11 +199,11 @@ export default class PathFinderViz extends Component {
                 const newGrid = this.state.nodes.slice();
                 const newNode = {
                     ...node,
-                    isVisited: true,
+                    isVisited: !this.state.nodes[node.row][node.col].isVisited,
                 };
                 newGrid[node.row][node.col] = newNode;
                 this.setState({nodes: newGrid});
-            },5 * i);
+            },10 * i);
         }
     }
 
@@ -160,28 +226,20 @@ export default class PathFinderViz extends Component {
         this.animateBacktrack(visitedNodesInOrder[0], visitedNodesInOrder[1]);
     }
 
-    createGrid() {
-        const nodes = [];
-        for (let row = 0; row < 15; row++) {
-            const currRow = [];
-            for (let col = 0; col < 40; col++) {
-                const currentNode = {
-                    col,
-                    row,
-                    isStart: row === 10 && col === 5,
-                    isFinish: row === 5 && col ===25,
-                    visited: false,
-                    isVisited: false,
-                    parent: null,
-                    isPath: false,
-                    isWall: false,
-                    isWeight: false,
-                };
-                currRow.push(currentNode);
-            }
-            nodes.push(currRow);
-        }
-        this.setState({nodes});
+    visualizeDijkstra() {
+        const {nodes} = this.state;
+        const startNode = nodes[START_NODE_ROW][START_NODE_COL];
+        const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = dijkstra(nodes, startNode, finishNode);
+        this.animateDijkstra(visitedNodesInOrder);
+    }
+
+    visualizeAstar() {
+        const {nodes} = this.state;
+        const startNode = nodes[START_NODE_ROW][START_NODE_COL];
+        const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = astar(nodes, startNode, finishNode);
+        this.animateDijkstra(visitedNodesInOrder);
     }
 
     
@@ -196,16 +254,21 @@ export default class PathFinderViz extends Component {
             <>
             <div className="algo">
                 <br></br>
-                <br></br>
                 <Button variant="outline-dark" onClick={() => this.visualizeBFS()}>
                     Breadth First Search
                 </Button>
-                <br></br>
-                <br></br>
-                <Button variant="outline-secondary" onClick={() => this.reset()}>
-                    Reset Grid
+                <text>&nbsp;</text>
+                <Button variant="outline-dark" onClick={() => this.visualizeBacktrack()}>
+                    Backtracking
                 </Button>
-                <br></br>
+                <text>&nbsp;</text>
+                <Button variant="outline-dark" onClick={() => this.visualizeDijkstra()}>
+                    Dijkstra's
+                </Button>
+                <text>&nbsp;</text>
+                <Button variant="outline-dark" onClick={() => this.visualizeAstar()}>
+                    A*
+                </Button>
                 <br></br>
                 <br></br>
             </div>
@@ -215,7 +278,7 @@ export default class PathFinderViz extends Component {
                     return (
                     <div key={rowIdx}>
                         {row.map((node, nodeIdx) => {
-                            const {row, col, isStart, isFinish, isVisited, isPath, isWall, isWeight} = node;
+                            const {row, col, isStart, isFinish, isVisited, isPath, isWall, isWeight, isWeightPath} = node;
                             return (
                                 <Node
                                     key={nodeIdx}
@@ -227,6 +290,7 @@ export default class PathFinderViz extends Component {
                                     isPath={isPath}
                                     isWall={isWall}
                                     isWeight={isWeight}
+                                    isWeightPath={isWeightPath}
                                     onMouseDown={(row, col) => this.handleMouseDown(row, col)}
                                     onMouseEnter={(row, col) => this.handleMouseEnter(row, col)}
                                     onMouseUp={() => this.handleMouseUp()}
@@ -240,16 +304,61 @@ export default class PathFinderViz extends Component {
     }
 }
 
+document.onkeydown = function (e) {
+    if(e.key === 'w'){
+        wallOrWeight = !wallOrWeight;
+        if(wallOrWeight){
+            document.getElementById("wallWeight").innerHTML = "Wall";
+        }
+        else{
+            document.getElementById("wallWeight").innerHTML = "Weight";
+        }
+        
+    }
+};
 
 const getNewGridWithWall = (grid, row, col) => {
     const newGrid = grid.slice();
     const node = newGrid[row][col];
-    const newNode = {
-            ...node,
-            isWall: !node.isWall,
-        };
     
-    
+    var newNode = {
+        ...node,
+    };
+
+    if(wallOrWeight){
+        newNode.isWeight = false;
+        newNode.isWall = !node.isWall;
+    }
+    else{
+        newNode.isWall = false;
+        newNode.isWeight = !node.isWeight;
+    }
     newGrid[row][col] = newNode;
     return newGrid;
+}
+
+const createGrid = () => {
+    const nodes = [];
+    for (let row = 0; row <25; row++) {
+        const currRow = [];
+        for (let col = 0; col < 65; col++) {
+            const currentNode = {
+                col,
+                row,
+                isStart: row === START_NODE_ROW && col === START_NODE_COL,
+                isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+                visited: false,
+                isVisited: false,
+                parent: null,
+                isPath: false,
+                isWall: false,
+                isWeight: false,
+                isWeightPath: false,
+                distance: 0,
+            };
+            currRow.push(currentNode);
+        }
+        nodes.push(currRow);
+    }
+    return nodes;
 }

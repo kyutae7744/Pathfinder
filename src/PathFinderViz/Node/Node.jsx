@@ -18,6 +18,7 @@ export default class Node extends Component {
             isPath,
             isWall,
             isWeight,
+            isWeightPath,
             onMouseDown,
             onMouseEnter,
             onMouseUp,
@@ -29,6 +30,7 @@ export default class Node extends Component {
             isPath ? 'node-path' : 
             isWall ? 'node-wall' :
             isWeight ? 'node-weight' :
+            isWeightPath ? 'node-weight-path' :
             '';
 
         return <div className={`node ${extraClassName}`}
