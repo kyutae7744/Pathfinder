@@ -60,7 +60,7 @@ function LandingPage() {
                     <br></br>
                     Press the W key to toggle between Wall and Weight. 
                     <br></br>Wall: Cannot go through.
-                    <br></br>Weight: Can go through but costs more. Weights only work on Dijkstra's and A*
+                    <br></br>Weight: Can go through but costs more.
                     <br></br>
                     <br></br>
                     Click and drag the mouse within the Grid to place Walls/Weights.

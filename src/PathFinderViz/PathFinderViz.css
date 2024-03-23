@@ -8,3 +8,80 @@
     text-align: center;
     padding: 0;
 }
+
+.legend {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+    width: 100%; 
+}
+
+.legendItem {
+    float: left;       
+    display: inline;    
+    width: 14%; 
+}
+
+.legendStart {
+    width: 20px;
+    height: 20px;
+    background-color: lightgreen;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
+.legendEnd {
+    width: 20px;
+    height: 20px;
+    background-color: lightpink;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
+.legendWall {
+    width: 20px;
+    height: 20px;
+    background-color: cadetblue;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
+.legendVisited {
+    width: 20px;
+    height: 20px;
+    background-color: aquamarine;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
+.legendPath {
+    width: 20px;
+    height: 20px;
+    background-color: lemonchiffon;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
+.legendWeight {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 4px;
+    background-image: url(https://img.icons8.com/doodle/48/weight-1.png);
+    background-size:cover;
+    outline: .5px solid lightblue;
+}
+
+.legendWeighted {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #292929;
+}
+

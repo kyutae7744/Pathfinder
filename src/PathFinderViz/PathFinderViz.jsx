@@ -7,11 +7,12 @@ import {bfs} from '../algorithms/bfs';
 import {backtrack} from '../algorithms/backtrack';
 import {dijkstra} from '../algorithms/dijkstra';
 import {greedy} from '../algorithms/greedy';
+import {astar} from '../algorithms/astar';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
 const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 50;
+const FINISH_NODE_COL = 47;
 var wallOrWeight = true;
 
 
@@ -101,7 +102,7 @@ export default class PathFinderViz extends Component {
         }
     }
 
-    animatePathDijkstra(node) {
+    animatePath(node) {
         var currNode = node;
 
         var shortestPath = [];
@@ -139,12 +140,12 @@ export default class PathFinderViz extends Component {
         }
     }
 
-    animateDijkstra(visitedNodes) {
+    animate(visitedNodes) {
         for(let i=0; i <= visitedNodes.length-1; i++){
             
             if(i===visitedNodes.length-1){
                 setTimeout(() => {
-                    this.animatePathDijkstra(visitedNodes[visitedNodes.length-1]);
+                    this.animatePath(visitedNodes[visitedNodes.length-1]);
                 }, 6 * i);
                 return;
             }
@@ -231,7 +232,7 @@ export default class PathFinderViz extends Component {
         const startNode = nodes[START_NODE_ROW][START_NODE_COL];
         const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = dijkstra(nodes, startNode, finishNode);
-        this.animateDijkstra(visitedNodesInOrder);
+        this.animate(visitedNodesInOrder);
     }
 
     visualizeGreedy() {
@@ -239,7 +240,16 @@ export default class PathFinderViz extends Component {
         const startNode = nodes[START_NODE_ROW][START_NODE_COL];
         const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = greedy(nodes, startNode, finishNode);
-        this.animateDijkstra(visitedNodesInOrder);
+        this.animate(visitedNodesInOrder);
+    }
+
+    visualizeAstar() {
+        const {nodes} = this.state;
+        const startNode = nodes[START_NODE_ROW][START_NODE_COL];
+        const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = astar(nodes, startNode, finishNode);
+        console.log(visitedNodesInOrder);
+        this.animate(visitedNodesInOrder);
     }
 
     
@@ -252,22 +262,53 @@ export default class PathFinderViz extends Component {
 
         return (
             <>
+            <br></br>
+            <div>
+                <ul className="legend">
+                    <li className="legendItem">
+                        <div className='legendStart'></div> Start
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendEnd'></div> End
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendWall'></div> Wall
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendWeight'></div> Weight
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendWeighted'></div> Weighted Algorithm
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendVisited'></div> Visited
+                    </li>
+                    <li className="legendItem">
+                        <div className='legendPath'></div> Path
+                    </li>
+                </ul>
+            </div>
+            <br></br>
             <div className="algo">
                 <br></br>
-                <Button variant="outline-dark" onClick={() => this.visualizeBFS()}>
+                <Button variant="secondary" onClick={() => this.visualizeBFS()}>
                     Breadth First Search
                 </Button>
                 <text>&nbsp;</text>
-                <Button variant="outline-dark" onClick={() => this.visualizeBacktrack()}>
+                <Button variant="secondary" onClick={() => this.visualizeBacktrack()}>
                     Backtracking
                 </Button>
                 <text>&nbsp;</text>
-                <Button variant="outline-dark" onClick={() => this.visualizeDijkstra()}>
+                <Button variant="dark" onClick={() => this.visualizeDijkstra()}>
                     Dijkstra's
                 </Button>
                 <text>&nbsp;</text>
-                <Button variant="outline-dark" onClick={() => this.visualizeGreedy()}>
+                <Button variant="dark" onClick={() => this.visualizeGreedy()}>
                     Greedy Best-first Search
+                </Button>
+                <text>&nbsp;</text>
+                <Button variant="dark" onClick={() => this.visualizeAstar()}>
+                    A*
                 </Button>
                 <br></br>
                 <br></br>
@@ -339,9 +380,9 @@ const getNewGridWithWall = (grid, row, col) => {
 
 const createGrid = () => {
     const nodes = [];
-    for (let row = 0; row <25; row++) {
+    for (let row = 0; row <23; row++) {
         const currRow = [];
-        for (let col = 0; col < 65; col++) {
+        for (let col = 0; col < 60; col++) {
             const currentNode = {
                 col,
                 row,
@@ -355,6 +396,8 @@ const createGrid = () => {
                 isWeight: false,
                 isWeightPath: false,
                 distance: 0,
+                heuristics: 0,
+                totalDistance: 0,
             };
             currRow.push(currentNode);
         }
