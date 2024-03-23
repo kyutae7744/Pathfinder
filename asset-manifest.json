@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Pathfinder/static/css/main.0b5a7669.css",
-    "main.js": "/Pathfinder/static/js/main.73058f59.js",
+    "main.css": "/Pathfinder/static/css/main.cb7e0cb7.css",
+    "main.js": "/Pathfinder/static/js/main.0ddf4b03.js",
     "static/js/787.28cb0dcd.chunk.js": "/Pathfinder/static/js/787.28cb0dcd.chunk.js",
     "index.html": "/Pathfinder/index.html",
-    "main.0b5a7669.css.map": "/Pathfinder/static/css/main.0b5a7669.css.map",
-    "main.73058f59.js.map": "/Pathfinder/static/js/main.73058f59.js.map",
+    "main.cb7e0cb7.css.map": "/Pathfinder/static/css/main.cb7e0cb7.css.map",
+    "main.0ddf4b03.js.map": "/Pathfinder/static/js/main.0ddf4b03.js.map",
     "787.28cb0dcd.chunk.js.map": "/Pathfinder/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b5a7669.css",
-    "static/js/main.73058f59.js"
+    "static/css/main.cb7e0cb7.css",
+    "static/js/main.0ddf4b03.js"
   ]
 }
