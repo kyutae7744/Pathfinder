@@ -6,7 +6,7 @@ import './PathFinderViz.css';
 import {bfs} from '../algorithms/bfs';
 import {backtrack} from '../algorithms/backtrack';
 import {dijkstra} from '../algorithms/dijkstra';
-import {astar} from '../algorithms/astar';
+import {greedy} from '../algorithms/greedy';
 
 const START_NODE_ROW = 10;
 const START_NODE_COL = 10;
@@ -234,11 +234,11 @@ export default class PathFinderViz extends Component {
         this.animateDijkstra(visitedNodesInOrder);
     }
 
-    visualizeAstar() {
+    visualizeGreedy() {
         const {nodes} = this.state;
         const startNode = nodes[START_NODE_ROW][START_NODE_COL];
         const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
-        const visitedNodesInOrder = astar(nodes, startNode, finishNode);
+        const visitedNodesInOrder = greedy(nodes, startNode, finishNode);
         this.animateDijkstra(visitedNodesInOrder);
     }
 
@@ -266,8 +266,8 @@ export default class PathFinderViz extends Component {
                     Dijkstra's
                 </Button>
                 <text>&nbsp;</text>
-                <Button variant="outline-dark" onClick={() => this.visualizeAstar()}>
-                    A*
+                <Button variant="outline-dark" onClick={() => this.visualizeGreedy()}>
+                    Greedy Best-first Search
                 </Button>
                 <br></br>
                 <br></br>
