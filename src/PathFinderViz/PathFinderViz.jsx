@@ -284,6 +284,9 @@ export default class PathFinderViz extends Component {
                         <div className='legendVisited'></div> Visited
                     </li>
                     <li className="legendItem">
+                        <div className='legendUnvisited'></div> Unvisited
+                    </li>
+                    <li className="legendItem">
                         <div className='legendPath'></div> Path
                     </li>
                 </ul>

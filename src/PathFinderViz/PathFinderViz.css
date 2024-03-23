@@ -19,7 +19,7 @@
 .legendItem {
     float: left;       
     display: inline;    
-    width: 14%; 
+    width: 12.5%; 
 }
 
 .legendStart {
@@ -58,6 +58,14 @@
     outline: .5px solid lightblue;
 }
 
+.legendUnvisited {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 4px;
+    outline: .5px solid lightblue;
+}
+
 .legendPath {
     width: 20px;
     height: 20px;
@@ -78,7 +86,7 @@
 }
 
 .legendWeighted {
-    width: 20px;
+    width: 30px;
     height: 20px;
     display: inline-block;
     border-radius: 4px;
