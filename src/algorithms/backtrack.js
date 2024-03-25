@@ -43,7 +43,6 @@ function backtracking(grid, currNode){
         }
     }
 
-    //currNode.visited = false;
     final_path.pop();
     visitedNodes.push(currNode);
 

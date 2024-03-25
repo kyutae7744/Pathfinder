@@ -69,7 +69,6 @@ export default class PathFinderViz extends Component {
         }
 
         for(let i=0; i < shortestPath.length; i++){
-            console.log(shortestPath[i])
             setTimeout(() => {
                 const node = shortestPath[i];
                 const newGrid = this.state.nodes.slice();
@@ -208,7 +207,7 @@ export default class PathFinderViz extends Component {
         }
     }
 
-    
+
 
     visualizeBFS() {
         const {nodes} = this.state;
@@ -216,7 +215,6 @@ export default class PathFinderViz extends Component {
         const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = bfs(nodes, startNode, finishNode);
         this.animateBFS(visitedNodesInOrder);
-        
     }
 
     visualizeBacktrack() {
@@ -248,7 +246,6 @@ export default class PathFinderViz extends Component {
         const startNode = nodes[START_NODE_ROW][START_NODE_COL];
         const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = astar(nodes, startNode, finishNode);
-        console.log(visitedNodesInOrder);
         this.animate(visitedNodesInOrder);
     }
 
@@ -362,6 +359,9 @@ document.onkeydown = function (e) {
 };
 
 const getNewGridWithWall = (grid, row, col) => {
+    if(grid[row][col].isFinish || grid[row][col].isStart){
+        return grid;
+    }
     const newGrid = grid.slice();
     const node = newGrid[row][col];
     
